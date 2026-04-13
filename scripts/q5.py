@@ -8,7 +8,7 @@ def distancia(pt1, pt2):
     return sqrt((pt1[0] - pt2[0])**2 + (pt1[1] - pt2[1])**2)
 
 def gaussianFilter(shape):
-    d0 = 30
+    d0 = 5
     base = np.zeros(shape[:2])
     rows, cols = shape[:2]
     center_row, center_col = rows // 2, cols // 2
