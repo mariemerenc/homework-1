@@ -16,9 +16,9 @@ def convolucao(img, p):
 
     if p == 'h':
         kernel = np.array([
-            [0, -1, 0],
-            [-1, 4, -1],
-            [0, -1, 0]
+            [0, 1, 0],
+            [1, -4, 1],
+            [0, 1, 0]
         ])
     elif p == 'l':
         kernel = np.ones((3,3)) / 9
@@ -34,7 +34,7 @@ def convolucao(img, p):
             
             for i in range(m):
                 for j in range(n):
-                    soma += img_pad[y+1,x+j] * kernel[i,j]
+                    soma += img_pad[y+i,x+j] * kernel[i,j]
             
             img_filtrada[y,x] = soma
 
