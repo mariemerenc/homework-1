@@ -20,6 +20,26 @@ cv::Mat gaussian_filter(cv::Size shape){
     return 1.0f - base;
 }
 
+cv::Mat ideal_filter(cv::Size shape){
+    float d0{5.0f};
+    cv::Mat base = cv::Mat::zeros(shape, CV_32FC1);
+    int center_row{shape.height/2}, center_col{shape.width/2};
+
+    for(int i{0}; i < shape.height; ++i){
+        for(int j{0}; j < shape.width; ++j){
+            auto d = std::sqrt(std::pow(i - center_row, 2) + std::pow(j - center_col, 2));
+            if(d <= d0){
+                base.at<float>(i, j) = 0.0f;
+            }
+            else{
+                base.at<float>(i, j) = 1.0f;
+            }
+        }
+    }
+
+    return base;
+}
+
 //como to com preguiça de procurar outra biblioteca q implemente a fft com shift, eu msm irei fzr o shift :)
 
 void preProcessarShift(cv::Mat& imagem) { // Basicamente uma função que aplica o que foi visto na questão 6 para otimizar o shift.
@@ -49,7 +69,7 @@ int main(int argc, char* argv[]){
     float k1 = std::stof(argv[2]);
     float k2 = std::stof(argv[3]);
 
-    cv::Mat filter = k1 + k2 * gaussian_filter(img.size());
+    cv::Mat filter = k1 + k2 * ideal_filter(img.size());
 
     cv::Mat dft_planes[2];
     cv::split(complexImg, dft_planes);
