@@ -56,7 +56,9 @@ int main(int argc, char* argv[]) {
 
     cv::Mat img_filtrada = convolucao(img, kernel ,d);
 
-    bool sucesso = cv::imwrite("resultado_filtrado.png", img_filtrada);
+    cv::imwrite("peppers_original.png", img);
+
+    bool sucesso = cv::imwrite("peppers_filtrado.png", img_filtrada);
     
     if (sucesso) {
         std::cout << "Imagem salva com sucesso como 'resultado_filtrado.png'!\n";
