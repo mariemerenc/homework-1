@@ -69,7 +69,7 @@ int main(int argc, char* argv[]){
     float k1 = std::stof(argv[2]);
     float k2 = std::stof(argv[3]);
 
-    cv::Mat filter = k1 + k2 * ideal_filter(img.size());
+    cv::Mat filter = k1 + k2 * gaussian_filter(img.size());
 
     cv::Mat dft_planes[2];
     cv::split(complexImg, dft_planes);
@@ -88,9 +88,12 @@ int main(int argc, char* argv[]){
     preProcessarShift(img_filtrada_float);
 
     img_filtrada_float = cv::abs(img_filtrada_float);
+
+    cv::Mat img_normalizada;
+    cv::normalize(img_filtrada_float, img_normalizada, 0, 255, cv::NORM_MINMAX);
     
     cv::Mat img_final;
-    img_filtrada_float.convertTo(img_final, CV_8UC1);
+    img_normalizada.convertTo(img_final, CV_8UC1);
 
     cv::imshow("Imagem Original", img);
     cv::imshow("Imagem Filtrada", img_final);
